@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <title>Minha Index</title>
+
+  </head>
+ <body>
+    <div class="container">
+    	<div class="row">
+    		<section id="home">
+    			<div class="column-md-6" id="">
+    				<form>
+    					<label class="text-info">Digite seu nome:</label>
+    					<input type="text" name="nome" placeholder="Insira seu nome aqui" required>
+    					<button type="submit" class="btn btn-primary btn-outline">Confirmar</button>
+    				</form>
+    			</div>
+    		</section>
+    		<section id="batepapo">
+    			<div class="column-md-6" id="mensagens">
+    				
+    				<form>
+    					<label class="text-info"></label>
+    					<input type="text" id="mensagem" placeholder="Insira seu nome aqui" required>
+    					<button type="submit" class="btn btn-primary btn-outline">Enviar</button>
+    				</form>
+    			</div>
+    		</section>
+    		
+    	</div>
+    </div>
+    
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+    <script type="text/javascript">
+    	function messagehtml(name,msg){
+    		return '<p><strong>'+name+':</strong>'+msg+'</p>'
+    	}
+    	var socket = io.connect('http://'+document.domain+':'+location.port);
+    	socket.on('message',function(data){
+    		console.log('message',data);
+    	});
+    	socket.on('connect',function(){
+    		socket.emit('message',{name: 'Gabriel', message: 'Teste'})
+    	});
+    	var nome = document.querySelector("#nome");
+    	var mensagem = document.querySelector("#mensagem");
+    	var homeform = document.querySelector("#home form");
+    	homeform.addEventListener('submit',function(ev){
+    		document.querySelector('#home').style.display = 'none';
+    		document.querySelector("#batepapo").style.display = 'grid';
+    		ev.preventDefault();
+    	});
+    </script>
+ </body>
+</html>
